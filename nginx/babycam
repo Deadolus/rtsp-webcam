@@ -1,0 +1,81 @@
+set $server YOURSERVER
+map $http_upgrade $connection_upgrade {
+  default upgrade;
+  ''      close;
+}
+server {
+  listen 0.0.0.0:443 ssl;
+
+  server_name $server;
+  ssl_certificate /etc/letsencrypt/live/hass-8645.egli.online/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/hass-8645.egli.online/privkey.pem;
+  ssl_dhparam /etc/ssl/certs/dhparam.pem;
+
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_prefer_server_ciphers on;
+  ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+  ssl_ecdh_curve secp384r1;
+  ssl_session_cache shared:SSL:10m;
+  ssl_session_tickets off;
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  resolver 8.8.8.8 8.8.4.4 valid=300s;
+  resolver_timeout 5s;
+  autoindex off;
+  index index.php
+
+    auth_basic "Restricted Area";
+  auth_basic_user_file /etc/nginx/passwd;
+
+  location ~ /protected/playlist.mpd {
+    root /var/www/html/babycam;
+    internal;
+  }
+
+  location ~ /protected/download.mpd {
+    include        fastcgi_params;
+    fastcgi_param  SCRIPT_FILENAME /var/www/html/babycam/download.php;
+    fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+  }
+
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+    root /var/www/html/babycam;
+    proxy_set_header Access-Control-Allow-Origin *;
+
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+
+    proxy_connect_timeout 4s;
+    proxy_read_timeout 86400s;
+    proxy_send_timeout 12s;
+
+
+  }
+
+
+# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+  location ~ \.php$ {
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    root /var/www/html/babycam;
+    fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+
+
+# Include location directive for Let's Encrypt ACME Challenge
+  include /etc/nginx/snippets/letsencrypt-acme-challenge.conf;
+}
+
+server {
+  listen 80;
+  server_name $server;
+  return 301 https://$host$request_uri;
+  root /var/www/html;
+}
+
