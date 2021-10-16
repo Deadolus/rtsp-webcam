@@ -57,38 +57,38 @@ if(isset($_POST['logout'])){
 			  justify-self: center;
 			  grid-column: 1;
 			  grid-row: 2;
-		} 
+		}
 		.right {
 			  justify-self: center;
 			  grid-column: 3;
 			  grid-row: 2;
-		} 
+		}
 		.live {
 			  justify-self: center;
 			  grid-column: 0;
 			  grid-row: 1;
-		} 
+		}
 		.up {
 			  justify-self: center;
 			  grid-column: 2;
 			  grid-row: 1;
-		} 
+		}
 		.down {
 			  justify-self: center;
 			  grid-column: 2;
 			  grid-row: 2;
-		} 
+		}
 		.zoomin {
 			  grid-column: 4;
 			  grid-row: 1;
-		} 
+		}
 		.zoomout {
 			  grid-column: 4;
 			  grid-row: 2;
-		} 
+		}
 		.btn-logout {
 			  float: right;
-		} 
+		}
 
 
 		</style>
@@ -101,7 +101,7 @@ if(isset($_POST['logout'])){
 			<div class="wrapper">
 				<h1>Camera</h1>
 				<h3>
-<?php 
+<?php
 	echo "Session created at: ".strval($_SESSION['CREATED']).", age:".(time() - $_SESSION['CREATED']);   // update creation time
 ?>
 </h3>
@@ -110,24 +110,6 @@ if(isset($_POST['logout'])){
 			</div>
 		</div>
 
-		<!--<script src="https://cdn.dashjs.org/latest/dash.all.js"></script>-->
-<!--<script>
-var player = init();
-function init() {
-	var video = document.querySelector("video");
-	player = dashjs.MediaPlayer().create();
-	player.initialize(video, "babycam/playlist.mpd", true);
-	player.updateSettings({
-	'streaming': {
-	'lowLatencyEnabled': true,
-		'liveDelay': 1,
-		'liveCatchUpMinDrift': 0.05,
-		'liveCatchUpPlaybackRate': 0.5
-	}
-	});
-	return player;
-}
-</script>-->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 <!--<script src="https://unpkg.com/video.js/dist/video.js"></script>-->
 <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
@@ -140,10 +122,11 @@ var playlist="protected/download.mpd";
     player.play();
   </script>
 
-<script> 
+<script>
+//function to send commands via webhook to HASS, so it will move the camera
 function cameraXhr(direction) {
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "https://hass-8645.egli.online/api/webhook/babyCamera2wQH5SfsQ7Yh8U9eMuL2UDELtc7gNgQ", true);
+	xhr.open("POST", "https://yourHASSsite/api/webhook/webcamera", true);
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.send(JSON.stringify({
 	direction: direction
@@ -159,5 +142,5 @@ function cameraXhr(direction) {
 		<!--<div class="grid-item zoomin"><button type="button" class="btn btn-primary" onclick="cameraXhr('zoomin')">Zoom in</button> </div>
 		<div class="grid-item zoomout"><button type="button" class="btn btn-primary" onclick="cameraXhr('zoomout')">Zoom out</button> </div>-->
 	</div>
-    </body> 
+    </body>
 </html>
