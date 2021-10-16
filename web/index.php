@@ -18,9 +18,11 @@ if(isset($_SESSION['login'])) {
   <div class="container">
     <h3 class="text-center">Welcome stranger</h3>
 <?php
+$user = "Asleep-Coronary-Kinfolk9"; //your user here
+$pass = "Outflank-Pointer-Starship2"; //your password here
 if(isset($_POST['submit'])){
 	$username = $_POST['username']; $password = $_POST['password'];
-	if($username === 'Asleep-Coronary-Kinfolk9' && $password === 'Outflank-Pointer-Starship2'){
+	if($username === $user && $password === $pass ){
 		$_SESSION['CREATED'] = time();  // update creation time
 		$_SESSION['login'] = true; header('LOCATION:player.php'); die();
 	} {
