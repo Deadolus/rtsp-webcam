@@ -13,6 +13,7 @@ I did not find any similar solution on the web, so I invested some time and came
 
 My setup runs on a raspberry pi, connected via static IP to the internet.
 The webcam is also connected to https://www.home-assistant.io/ and a webhook moves the camera.
+![Webpage](webpage.png "Webpage")
 
 ### How to
 
