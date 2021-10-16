@@ -12,6 +12,7 @@ Keep a watch on your dog/plant/baby/apartment from anywhere on the planet.
 I did not find any similar solution on the web, so I invested some time and came up with this solution.
 
 My setup runs on a raspberry pi, connected via static IP to the internet.
+The webcam is also connected to https://www.home-assistant.io/ and a webhook moves the camera.
 
 ### How to
 

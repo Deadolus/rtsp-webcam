@@ -1,0 +1,75 @@
+alias: Move camera according to webhook
+description: ''
+trigger:
+  - platform: webhook
+    webhook_id: babyCamera
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.json.direction == "left" }}'
+        sequence:
+          - service: onvif.ptz
+            data:
+              pan: LEFT
+              move_mode: ContinuousMove
+            target:
+              device_id: CAMID
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.json.direction == "right" }}'
+        sequence:
+          - service: onvif.ptz
+            target:
+              device_id: CAMID
+            data:
+              pan: RIGHT
+              move_mode: ContinuousMove
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.json.direction == "up" }}'
+        sequence:
+          - service: onvif.ptz
+            target:
+              device_id: CAMID
+            data:
+              tilt: UP
+              move_mode: ContinuousMove
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.json.direction == "down" }}'
+        sequence:
+          - service: onvif.ptz
+            target:
+              device_id: CAMID
+            data:
+              tilt: DOWN
+              move_mode: ContinuousMove
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.json.direction == "zoomin" }}'
+        sequence:
+          - service: onvif.ptz
+            target:
+              device_id: CAMID
+            data:
+              zoom: ZOOM_IN
+              move_mode: ContinuousMove
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.json.direction == "zoomout" }}'
+        sequence:
+          - service: onvif.ptz
+            target:
+              device_id: CAMID
+            data:
+              zoom: ZOOM_OUT
+              move_mode: ContinuousMove
+    default:
+      - service: notify.persistent_notification
+        data:
+          title: Unknown Camera data
+          message: '{{trigger.data}}'
+mode: single
+
