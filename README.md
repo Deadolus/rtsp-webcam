@@ -27,6 +27,6 @@ The webcam is also connected to https://www.home-assistant.io/ and a webhook mov
 ### Issues
 
 * Should use ldash to reduce delay, but so far the standard ffmpeg binary on raspberry pi does not support it.
-  7 seconds is good enough for me.
+  7 seconds is good enough for my use case.
 * Needs better documentation, I know.
 
