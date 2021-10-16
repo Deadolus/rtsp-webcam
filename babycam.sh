@@ -1,5 +1,5 @@
 #!/bin/bash
-VIDSOURCE='rtsp://aeLm3mLMJnie:SCHLQ6zTBke2@192.168.1.30:554/11'
+VIDSOURCE='rtsp://user:pass@192.168.1.30:554/11'
 AUDIO_OPTS="-c:a aac -b:a 160000 -ac 2"
 VIDEO_OPTS="-tune zerolatency -c:v copy -r 20  -fflags nobuffer" #-b:v 800000"
 mkdir -p /tmp/babycam

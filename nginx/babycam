@@ -7,8 +7,8 @@ server {
   listen 0.0.0.0:443 ssl;
 
   server_name $server;
-  ssl_certificate /etc/letsencrypt/live/hass-8645.egli.online/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/hass-8645.egli.online/privkey.pem;
+  ssl_certificate /etc/letsencrypt/live/YOURSITE/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/YOURSITE/privkey.pem;
   ssl_dhparam /etc/ssl/certs/dhparam.pem;
 
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
